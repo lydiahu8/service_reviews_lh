@@ -11,7 +11,9 @@ const app = express();
 app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
 
 const port = 3008;
 
@@ -19,14 +21,34 @@ const port = 3008;
 app.use(express.static(`${__dirname}/../client/dist`));
 
 // api will also deliver the static files. product/:id serves my data
-app.get('/api/product/:id', (req, res) => {
-  const id = req.params.id;
+app.get('/api/reviews/:productId', (req, res) => {
+  const {
+    id,
+  } = req.params;
   grabProduct(id, (err, num) => {
     if (err) {
       res.status(404).send();
     }
     res.status(200).send(num);
   });
+});
+
+app.post('/api/reviews/:productId', (req, res) => {
+  const {
+    id,
+  } = req.params;
+});
+
+app.put('/api/reviews/:productId', (req, res) => {
+  const {
+    id,
+  } = req.params;
+});
+
+app.delete('/api/reviews/:productId', (req, res) => {
+  const {
+    id,
+  } = req.params;
 });
 
 // the index.html
