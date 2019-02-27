@@ -3,9 +3,13 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
 
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({
+  path: '../.env'
+});
 
-mongoose.connect('mongodb://victor:victor123@ds125385.mlab.com:25385/products', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://lydia:lydia@cluster0-ktezt.mongodb.net/test?retryWrites=true', {
+  useNewUrlParser: true
+});
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -30,14 +34,15 @@ const reviewSchema = new Schema({
 });
 
 const Review = mongoose.model('Review', reviewSchema);
-
+//drops the database
 Review.deleteMany({}, () => {
   console.log('Database running');
 });
 
 const data = {
   category: ['shoes', 'electronics', 'apparel', 'auto', 'health', 'lifestyle', 'tech', 'furniture',
-    'splurge', 'food'],
+    'splurge', 'food'
+  ],
   verified_purchase: [true, false],
 };
 
@@ -61,8 +66,8 @@ for (let i = 0; i <= 100; i += 1) {
       review_title: faker.lorem.sentence(),
       reviewer: faker.name.findName(),
       images: generateImages(),
-      verified_purchase: data.verified_purchase[Math.floor(Math.random()
-        * data.verified_purchase.length)],
+      verified_purchase: data.verified_purchase[Math.floor(Math.random() *
+        data.verified_purchase.length)],
       helpful_counter: Math.floor(Math.random() * 500) + 1,
       created_at: faker.date.past().toDateString(),
     });
@@ -75,7 +80,9 @@ for (let i = 0; i <= 100; i += 1) {
 }
 
 function grabProduct(productid, callback) {
-  Review.find({ product_id: productid }, (err, num) => {
+  Review.find({
+    product_id: productid
+  }, (err, num) => {
     if (err) {
       callback(err);
     }
