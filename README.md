@@ -10,11 +10,14 @@
 
 ## Table of Contents
 
+1. [API](#api)
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
 
-## CRUD API Routing
+## API
+
+### CRUD API Routing
 
 | Endpoint                   | Type    | Operation                 |
 |----------------------------|---------|---------------------------|
@@ -33,21 +36,21 @@
 
 - **Data:** `JSON Object`
 
-```
+```js
 {
-  "id": "1",
-  "product_id": "2",
-  "product_name": "Apple AirPods",
-  "username": "Jane Doe",
-  "user_id": "5"
-  "ratings": "3",
-  "headline": "These are Fake!",
-  "review": "Don't buy these, they broke within a few days!",
+  "id": Number,
+  "product_id": Number,
+  "product_name": String,
+  "username": String,
+  "user_id": Number,
+  "ratings": Number,
+  "headline": String,
+  "review": String,
   "images": [],
-  "created": "1511420673",
-  "updated": "1528145536",
-  "verified": true,
-  "helpful": 9,
+  "created": Number,
+  "updated": Number,
+  "verified": Boolean,
+  "helpful": Number,
 }
 ```
 
@@ -61,13 +64,10 @@
 
 - **Data:** `JSON Object`
 
-```
+```js
 {
-  "username": "John Docker",
-  "ratings": "5",
-  "headline": "Love These!",
-  "review": "These are great for the gym!",
-  "images": [],
+  "id": Number,
+  "isSuccessful": Boolean,
 }
 ```
 
@@ -81,26 +81,25 @@
 
 - **Data:** `JSON Object`
 
-```
+```js
 {
-  "id": "1",
-  "product_id": "2",
-  "product_name": "Apple AirPods",
-  "username": "Jane Doe",
-  "user_id": "5"
-  "ratings": "3",
-  "headline": "These are Fake!",
-  "review": "Don't buy these, they broke within a few days!",
+  "id": Number,
+  "product_id": Number,
+  "product_name": String,
+  "username": String,
+  "user_id": Number,
+  "ratings": Number,
+  "headline": String,
+  "review": String,
   "images": [],
-  "created": "1511420673",
-  "updated": "1528145536",
-  "verified": true,
-  "helpful": 9,
+  "created": Number,
+  "updated": Number,
+  "verified": Boolean,
+  "helpful": Number,
 }
 ```
 
 #### DELETE REQUEST
-
 
 > Endpoint: /api/reviews/:productId
 
@@ -110,9 +109,10 @@
 
 - **Data:** `JSON Object`
 
-```
+```js
 {
-  "id": "1",
+  "id": Number,
+  "isSuccessful": Boolean,
 }
 ```
 
