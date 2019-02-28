@@ -4,28 +4,74 @@ const compression = require('compression');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const grabProduct = require('../database/index.js').grabProduct;
+const db = require('../database/index.js');
 
 const app = express();
 
 app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
 
 const port = 3008;
 
 // bundle
 app.use(express.static(`${__dirname}/../client/dist`));
 
-// api will also deliver the static files. product/:id serves my data
-app.get('/api/product/:id', (req, res) => {
-  const id = req.params.id;
-  grabProduct(id, (err, num) => {
+// Get all reviews for a specific product at :productId
+app.get('/api/reviews/:productId', (req, res) => {
+  const {
+    productId,
+  } = req.params;
+  db.getReviews(parseInt(productId, 10), (err, num) => {
     if (err) {
-      res.status(404).send();
+      res.status(400).send();
     }
     res.status(200).send(num);
+  });
+});
+
+// Post a review to a specific product
+app.post('/api/reviews/', (req, res) => {
+  const {
+    body,
+  } = req;
+  db.addOneReview(body, (err, data) => {
+    if (err) {
+      res.status(400).send();
+    }
+    res.status(200).send(data);
+  });
+});
+
+// Update a review for a specific product at :productId
+app.put('/api/reviews/:productId', (req, res) => {
+  const {
+    productId,
+  } = req.params;
+  const {
+    body,
+  } = req;
+  db.updateOneReview(parseInt(productId, 10), body, (err, data) => {
+    if (err) {
+      res.status(400).send();
+    }
+    res.status(200).send(data);
+  });
+});
+
+// Delete a review for a specific product at :productId
+app.delete('/api/reviews/:productId', (req, res) => {
+  const {
+    productId,
+  } = req.params;
+  db.deleteOneReview(parseInt(productId, 10), (err, data) => {
+    if (err) {
+      res.status(400).send();
+    }
+    res.status(200).send(data);
   });
 });
 

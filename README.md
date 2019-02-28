@@ -1,20 +1,120 @@
-# Project Name
-Amazonians
-> Project description
-Create a UI clone of Amazon's item detail page.
+# SaleBoat
+
+> Reviews Module that displays unique user reviews and images for specific products.
 
 ## Related Projects
 
-  - https://github.com/amazonians-110/product-carousel-pablo
-  - https://github.com/amazonians-110/product-reviews-victor
-  - https://github.com/amazonians-110/product-gallery-summary
-  - https://github.com/amazonians-110/add_to_cart-chris
+  - https://github.com/sale-boat/service_related_kc
+  - https://github.com/sale-boat/service_photos_mh
+  - https://github.com/sale-boat/service_cart_ls
 
 ## Table of Contents
 
+1. [API](#api)
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
+
+## API
+
+### CRUD API Routing
+
+| Endpoint                   | Type    | Operation                 |
+|----------------------------|---------|---------------------------|
+| `/api/reviews/:productId`  | GET     | Get all reviews           |
+| `/api/reviews/`            | POST    | Add a review              |
+| `/api/reviews/:productId`  | PUT     | Update a review           |
+| `/api/reviews/:productId`  | DELETE  | Delete a review           |
+
+### GET REQUEST
+
+> Endpoint: /api/reviews/:productId
+
+**URL Params** : `productId`
+
+###### Example Responses
+
+- **Data:** `JSON Object`
+
+```js
+{
+  "id": Number,
+  "product_id": Number,
+  "product_name": String,
+  "username": String,
+  "user_id": Number,
+  "ratings": Number,
+  "headline": String,
+  "review": String,
+  "images": [],
+  "created": Number,
+  "updated": Number,
+  "verified": Boolean,
+  "helpful": Number,
+}
+```
+
+### POST REQUEST
+
+> Endpoint: /api/reviews/
+
+**URL Params** : `{ Review }` JSON Object
+
+###### Example Responses
+
+- **Data:** `JSON Object`
+
+```js
+{
+  "id": Number,
+  "isSuccessful": Boolean,
+}
+```
+
+### UPDATE REQUEST
+
+> Endpoint: /api/reviews/:productId
+
+**URL Params** : `productId`，`{ Review }` JSON Object
+
+###### Example Responses
+
+- **Data:** `JSON Object`
+
+```js
+{
+  "id": Number,
+  "product_id": Number,
+  "product_name": String,
+  "username": String,
+  "user_id": Number,
+  "ratings": Number,
+  "headline": String,
+  "review": String,
+  "images": [],
+  "created": Number,
+  "updated": Number,
+  "verified": Boolean,
+  "helpful": Number,
+}
+```
+
+#### DELETE REQUEST
+
+> Endpoint: /api/reviews/:productId
+
+**URL Params** : `productId`
+
+###### Example Responses
+
+- **Data:** `JSON Object`
+
+```js
+{
+  "id": Number,
+  "isSuccessful": Boolean,
+}
+```
 
 ## Usage
 

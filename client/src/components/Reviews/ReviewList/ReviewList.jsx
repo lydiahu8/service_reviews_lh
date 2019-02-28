@@ -6,7 +6,9 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { Button, Select, Reviews, Title, Starbox, Space } from './ReviewList.style';
+import {
+  Button, Select, Reviews, Title, Starbox, Space,
+} from './ReviewList.style';
 
 const axios = require('axios');
 
@@ -27,7 +29,7 @@ class ReviewList extends React.Component {
     const fullUrl = document.URL;
     const urlArray = fullUrl.split('/');
     const lastSegment = urlArray[urlArray.length - 1];
-    axios.get(`http://ec2-34-211-238-169.us-west-2.compute.amazonaws.com/api/product/${lastSegment}`)
+    axios.get(`http://localhost:3008/api/product/${lastSegment}`)
       .then((res) => {
         for (let i = 0; i < res.data.length; i += 1) {
           this.state.reviewers.push(res.data[i].reviewer);
@@ -41,7 +43,9 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    const { reviewers, reviewTitle, review , helpful, datePosted } = this.state;
+    const {
+      reviewers, reviewTitle, review, helpful, datePosted,
+    } = this.state;
     return (
       <div>
         <Title>Showing 1-3 of 453 reviews</Title>
@@ -71,7 +75,7 @@ class ReviewList extends React.Component {
             </Starbox>
             <div> {datePosted[0]} </div>
             <p width="auto">
-              { review[0] }
+              {review[0]}
             </p>
             <div>
               {helpful[0]} people found this helpful
@@ -95,7 +99,7 @@ class ReviewList extends React.Component {
           </Starbox>
           <div> {datePosted[1]} </div>
           <p width="auto">
-            { review[1] }
+            {review[1]}
           </p>
           <div>
             {helpful[1]} people found this helpful
@@ -118,7 +122,7 @@ class ReviewList extends React.Component {
           </Starbox>
           <div> {datePosted[2]} </div>
           <p width="auto">
-            { review[2] }
+            {review[2]}
           </p>
           <div>
             {helpful[2]} people found this helpful
@@ -126,7 +130,7 @@ class ReviewList extends React.Component {
           <Space>
             <Button>Helpful</Button> |
             <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Comment</a> |
-            <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Report abuse</a>          
+            <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Report abuse</a>
           </Space>
         </Reviews>
       </div>
