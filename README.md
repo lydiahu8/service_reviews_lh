@@ -26,39 +26,39 @@
 | `/api/reviews/:reviewsId`  | PUT     | Update a review           |
 | `/api/reviews/:reviewsId`  | DELETE  | Delete a review           |
 
-### GET REQUEST
+### CREATE
 
-> Endpoint: /api/reviews/:productId
+> POST  /api/reviews/
 
-**URL Params** : `productId`
+Adds a new review to a specific product.
 
-###### Example Responses
-
-- **Data:** `JSON Object`
+###### Example Request
 
 ```js
 {
   "id": Number,
   "product_id": Number,
   "product_name": String,
-  "username": String,
   "user_id": Number,
-  "ratings": Number,
+  "username": String,
+  "overall_ratings": Number,
+  "subRatings": [
+    {
+      "feature": String,
+      "rating": Number
+    }
+  ],
   "headline": String,
   "review": String,
-  "images": [],
+  "images": [
+    String
+  ],
   "created": Number,
   "updated": Number,
   "verified": Boolean,
   "helpful": Number,
 }
 ```
-
-### POST REQUEST
-
-> Endpoint: /api/reviews/
-
-**URL Params** : `{ Review }` JSON Object
 
 ###### Example Responses
 
@@ -71,13 +71,66 @@
 }
 ```
 
-### UPDATE REQUEST
+##### Success
 
-> Endpoint: /api/reviews/:reviewsId
+- **Status Code:** `201 CREATED`
 
-**URL Params** : `reviewsId`，`{ Review }` JSON Object
+##### Error
+
+- **Status Code:** `400 BAD REQUEST`
+
+
+### READ
+
+> GET /api/reviews/:productId
+
+Returns a list of reviews for a specific product.
 
 ###### Example Responses
+
+- **Data:** `JSON Object`
+
+```js
+
+{
+  "id": Number,
+  "product_id": Number,
+  "product_name": String,
+  "user_id": Number,
+  "username": String,
+  "overall_ratings": Number,
+  "subRatings": [
+    {
+      "feature": String,
+      "rating": Number
+    }
+  ],
+  "headline": String,
+  "review": String,
+  "images": [String...],
+  "created": Number,
+  "updated": Number,
+  "verified": Boolean,
+  "helpful": Number,
+}
+
+```
+##### Success
+
+- **Status Code:** `200 OK`
+
+##### Error
+
+- **Status Code:** `400 BAD REQUEST`
+
+
+### UPDATE
+
+> PUT /api/reviews/:reviewsId
+
+Updates a review for a specific product.
+
+###### Example Request
 
 - **Data:** `JSON Object`
 
@@ -86,12 +139,18 @@
   "id": Number,
   "product_id": Number,
   "product_name": String,
-  "username": String,
   "user_id": Number,
-  "ratings": Number,
+  "username": String,
+  "overall_ratings": Number,
+  "subRatings": [
+    {
+      "feature": String,
+      "rating": Number
+    }
+  ],
   "headline": String,
   "review": String,
-  "images": [],
+  "images": [String...],
   "created": Number,
   "updated": Number,
   "verified": Boolean,
@@ -99,11 +158,19 @@
 }
 ```
 
-#### DELETE REQUEST
+##### Success
 
-> Endpoint: /api/reviews/:reviewsId
+- **Status Code:** `201 CREATED`
 
-**URL Params** : `reviewsId`
+##### Error
+
+- **Status Code:** `400 BAD REQUEST`
+
+#### DELETE
+
+> DELETE /api/reviews/:reviewsId
+
+Deletes a review for a specific product.
 
 ###### Example Responses
 
@@ -115,6 +182,14 @@
   "isSuccessful": Boolean,
 }
 ```
+
+##### Success
+
+- **Status Code:** `204 NO CONTENT`
+
+##### Error
+
+- **Status Code:** `400 BAD REQUEST`
 
 ## Usage
 
