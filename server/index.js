@@ -47,14 +47,14 @@ app.post('/api/reviews/', (req, res) => {
 });
 
 // Update a review for a specific product at :productId
-app.put('/api/reviews/:productId', (req, res) => {
+app.put('/api/reviews/:reviewsId', (req, res) => {
   const {
-    productId,
+    reviewsId,
   } = req.params;
   const {
     body,
   } = req;
-  db.updateOneReview(parseInt(productId, 10), body, (err, data) => {
+  db.updateOneReview(parseInt(reviewsId, 10), body, (err, data) => {
     if (err) {
       res.status(400).send();
     }
@@ -63,11 +63,11 @@ app.put('/api/reviews/:productId', (req, res) => {
 });
 
 // Delete a review for a specific product at :productId
-app.delete('/api/reviews/:productId', (req, res) => {
+app.delete('/api/reviews/:reviewsId', (req, res) => {
   const {
-    productId,
+    reviewsId,
   } = req.params;
-  db.deleteOneReview(parseInt(productId, 10), (err, data) => {
+  db.deleteOneReview(parseInt(reviewsId, 10), (err, data) => {
     if (err) {
       res.status(400).send();
     }

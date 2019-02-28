@@ -23,8 +23,8 @@
 |----------------------------|---------|---------------------------|
 | `/api/reviews/:productId`  | GET     | Get all reviews           |
 | `/api/reviews/`            | POST    | Add a review              |
-| `/api/reviews/:productId`  | PUT     | Update a review           |
-| `/api/reviews/:productId`  | DELETE  | Delete a review           |
+| `/api/reviews/:reviewsId`  | PUT     | Update a review           |
+| `/api/reviews/:reviewsId`  | DELETE  | Delete a review           |
 
 ### GET REQUEST
 
@@ -73,9 +73,9 @@
 
 ### UPDATE REQUEST
 
-> Endpoint: /api/reviews/:productId
+> Endpoint: /api/reviews/:reviewsId
 
-**URL Params** : `productId`，`{ Review }` JSON Object
+**URL Params** : `reviewsId`，`{ Review }` JSON Object
 
 ###### Example Responses
 
@@ -101,9 +101,9 @@
 
 #### DELETE REQUEST
 
-> Endpoint: /api/reviews/:productId
+> Endpoint: /api/reviews/:reviewsId
 
-**URL Params** : `productId`
+**URL Params** : `reviewsId`
 
 ###### Example Responses
 
