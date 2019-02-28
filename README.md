@@ -4,9 +4,9 @@
 
 ## Related Projects
 
-  - https://github.com/sale-boat/service_related_kc
-  - https://github.com/sale-boat/service_photos_mh
-  - https://github.com/sale-boat/service_cart_ls
+  - [Related Products](https://github.com/sale-boat/service_related_kc)
+  - [Photos](https://github.com/sale-boat/service_photos_mh)
+  - [Service Cart](https://github.com/sale-boat/service_cart_ls)
 
 ## Table of Contents
 
@@ -107,7 +107,9 @@ Returns a list of reviews for a specific product.
   ],
   "headline": String,
   "review": String,
-  "images": [String...],
+  "images": [
+    String
+  ],
   "created": Number,
   "updated": Number,
   "verified": Boolean,
@@ -150,7 +152,9 @@ Updates a review for a specific product.
   ],
   "headline": String,
   "review": String,
-  "images": [String...],
+  "images": [
+    String
+  ],
   "created": Number,
   "updated": Number,
   "verified": Boolean,
