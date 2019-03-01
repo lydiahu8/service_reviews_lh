@@ -2,7 +2,11 @@ DROP DATABASE IF EXISTS products;
 
 CREATE DATABASE products;
 
+-- Connects the to products database
 \c products;
+
+-- Provides total time it took to execute query and fetch results back to client
+-- \timing
 
 CREATE TABLE IF NOT EXISTS reviews (
   review_id SERIAL PRIMARY KEY,
@@ -28,6 +32,24 @@ CREATE TABLE IF NOT EXISTS images (
 CREATE TABLE IF NOT EXISTS subRatings (
   subRating_id SERIAL PRIMARY KEY,
   feature VARCHAR(50),
-  rating VARCHAR(1)
+  rating VARCHAR(1),
   review_id INTEGER REFERENCES reviews(review_id)
 );
+
+-- COPY reviews into reviews table from CSV
+COPY reviews (product_id, product_name, user_id, username, overall_ratings, headline, review, created, updated, verified, helpful)
+FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/utilities/reviews.csv'
+DELIMITERS ',' CSV HEADER;
+
+-- COPY images into images table from CSV
+COPY images (image_url, review_id)
+FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/utilities/images.csv'
+DELIMITERS ',' CSV HEADER;
+
+-- COPY subRatings into subRatings table from CSV
+COPY reviews (feature, rating, review_id)
+FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/utilities/subRatings.csv'
+DELIMITERS ',' CSV HEADER;
+
+-- CREATE INDEX productIdIndex ON reviews(product_id);
+-- CREATE INDEX productNameIndex ON reviews(product_name);
