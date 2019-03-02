@@ -6,21 +6,21 @@ CREATE DATABASE products;
 \c products;
 
 -- Provides total time it took to execute query and fetch results back to client
--- \timing
+\timing
 
 CREATE TABLE IF NOT EXISTS reviews (
   review_id SERIAL PRIMARY KEY,
-  product_id INTEGER NOT NULL,
+  product_id VARCHAR(10) NOT NULL,
   product_name VARCHAR(100) NOT NULL,
-  user_id INTEGER NOT NULL,
+  user_id VARCHAR(10) NOT NULL,
   username VARCHAR(100) NOT NULL,
-  overall_ratings INTEGER,
+  overall_ratings VARCHAR(5),
   headline VARCHAR(255),
   review TEXT,
   created VARCHAR(50) NOT NULL,
   updated VARCHAR(50) NOT NULL,
   verified BOOLEAN,
-  helpful INTEGER
+  helpful VARCHAR(10)
 );
 
 CREATE TABLE IF NOT EXISTS images (
@@ -37,18 +37,18 @@ CREATE TABLE IF NOT EXISTS subRatings (
 );
 
 -- COPY reviews into reviews table from CSV
--- COPY reviews (product_id, product_name, user_id, username, overall_ratings, headline, review, created, updated, verified, helpful)
--- FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/utilities/reviews.csv'
--- DELIMITERS ',' CSV HEADER;
+COPY reviews (product_id, product_name, user_id, username, overall_ratings, headline, review, created, updated, verified, helpful)
+FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/reviews.csv'
+DELIMITERS ',' CSV HEADER;
 
 -- COPY images into images table from CSV
 -- COPY images (image_url, review_id)
--- FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/utilities/images.csv'
+-- FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/images.csv'
 -- DELIMITERS ',' CSV HEADER;
 
 -- COPY subRatings into subRatings table from CSV
 -- COPY reviews (feature, rating, review_id)
--- FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/utilities/subRatings.csv'
+-- FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/subRatings.csv'
 -- DELIMITERS ',' CSV HEADER;
 
 -- CREATE INDEX productIdIndex ON reviews(product_id);
