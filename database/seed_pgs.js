@@ -111,7 +111,7 @@ const generateReviews = () => {
 // Generates each row for the images table
 const generateImages = () => {
   const imageUrl = images[randomNumberGenerator(0, 10)];
-  const reviewId = randomNumberGenerator(0, 2e7);
+  const reviewId = randomNumberGenerator(1, 3e7);
 
   return `'${imageUrl}',${reviewId}\n`;
 };
@@ -120,7 +120,7 @@ const generateImages = () => {
 const generateSubRatings = () => {
   const feature = features[randomNumberGenerator(0, 8)];
   const rating = randomNumberGenerator(1, 5);
-  const reviewId = randomNumberGenerator(0, 2e7);
+  const reviewId = randomNumberGenerator(1, 3e7);
 
   return `'${feature}','${rating}',${reviewId}\n`;
 };
@@ -129,7 +129,7 @@ const reviewsFileDest = 'database/helpers/reviews.csv';
 writeNTimes(reviewsFileDest, generateReviews, 1e7);
 
 const imagesFileDest = 'database/helpers/images.csv';
-writeNTimes(imagesFileDest, generateImages, 1e4);
+writeNTimes(imagesFileDest, generateImages, 1e5);
 
 const subRatingFileDest = 'database/helpers/subRatings.csv';
-writeNTimes(subRatingFileDest, generateSubRatings, 1e4);
+writeNTimes(subRatingFileDest, generateSubRatings, 1e5);

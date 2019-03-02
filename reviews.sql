@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS images (
   review_id INTEGER REFERENCES reviews(review_id)
 );
 
-CREATE TABLE IF NOT EXISTS subRatings (
-  subRating_id SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS subratings (
+  subrating_id SERIAL PRIMARY KEY,
   feature VARCHAR(50),
   rating VARCHAR(5),
   review_id INTEGER REFERENCES reviews(review_id)
@@ -47,7 +47,7 @@ FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/data
 DELIMITERS ',' CSV HEADER;
 
 -- COPY subRatings into subRatings table from CSV
-COPY reviews (feature, rating, review_id)
+COPY subratings (feature, rating, review_id)
 FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/subRatings.csv'
 DELIMITERS ',' CSV HEADER;
 
