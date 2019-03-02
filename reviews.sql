@@ -32,24 +32,24 @@ CREATE TABLE IF NOT EXISTS images (
 CREATE TABLE IF NOT EXISTS subRatings (
   subRating_id SERIAL PRIMARY KEY,
   feature VARCHAR(50),
-  rating INTEGER,
+  rating VARCHAR(5),
   review_id INTEGER REFERENCES reviews(review_id)
 );
 
 -- COPY reviews into reviews table from CSV
 COPY reviews (product_id, product_name, user_id, username, overall_ratings, headline, review, created, updated, verified, helpful)
-FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/reviews.csv'
+FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv'
 DELIMITERS ',' CSV HEADER;
 
 -- COPY images into images table from CSV
--- COPY images (image_url, review_id)
--- FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/images.csv'
--- DELIMITERS ',' CSV HEADER;
+COPY images (image_url, review_id)
+FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv'
+DELIMITERS ',' CSV HEADER;
 
 -- COPY subRatings into subRatings table from CSV
--- COPY reviews (feature, rating, review_id)
--- FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/subRatings.csv'
--- DELIMITERS ',' CSV HEADER;
+COPY reviews (feature, rating, review_id)
+FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/subRatings.csv'
+DELIMITERS ',' CSV HEADER;
 
 -- CREATE INDEX productIdIndex ON reviews(product_id);
 -- CREATE INDEX productNameIndex ON reviews(product_name);

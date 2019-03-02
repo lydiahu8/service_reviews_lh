@@ -1,10 +1,5 @@
 const fs = require('fs');
 const faker = require('faker');
-const path = require('path');
-const moment = require('moment');
-
-const start = Date.now();
-console.log(`Start: ${moment().format('HH:MM:SS')}`);
 
 const randomNumberGenerator = (min, max) => {
   let randomNum = Math.floor(Math.random() * max);
@@ -14,8 +9,8 @@ const randomNumberGenerator = (min, max) => {
   return randomNum;
 };
 
-
 const years = ['2019', '2018', '2017', '2016', '2015'];
+
 const months = [
   'January',
   'February',
@@ -31,16 +26,49 @@ const months = [
   'December',
 ];
 
-const records = 1000001;
+const images = [
+  'https://loremflickr.com/cache/resized/2016_1936562673_49992bb143_b_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/7924_46570589662_02f05f2773_b_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/7375_9670555858_655e718321_b_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/4804_45978427451_7bace9615f_b_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/4902_46127263711_76af16540f_c_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/4850_46005048544_c9c5471548_b_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/4847_32451220948_d00bf545c9_h_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/21_34346794_c255d8f734_o_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/6104_6340030463_f67df42db9_b_690_590_nofilter.jpg',
+  'https://loremflickr.com/cache/resized/7896_33300853788_3a3a99f332_h_690_590_nofilter.jpg',
+];
 
-function writeNTimes(fileDest, data, n) {
+const features = [
+  'Material Quality',
+  'Sound Quality',
+  'Durability',
+  'Battery Life',
+  'Picture Quality',
+  'Water Resistance',
+  'Easy to Use',
+  'Easy to Assemble',
+];
+
+// Writes n amount of rows into csv file
+const writeNTimes = (fileDest, data, n) => {
   let i = 0;
   const writer = fs.createWriteStream(fileDest);
-  const reviewsHeader = 'product_id,product_name,user_id,username,overall_ratings,headline,review,created,updated,verified,helpful\n';
-  writer.write(reviewsHeader);
+  let randomMax = randomNumberGenerator(1, 10);
 
-  let randomMax = randomNumberGenerator(2, 10);
+  // Adds appropriate headings into its respective csv file
+  if (fileDest === 'database/helpers/reviews.csv') {
+    const reviewsHeader = 'product_id,product_name,user_id,username,overall_ratings,headline,review,created,updated,verified,helpful\n';
+    writer.write(reviewsHeader);
+  } else if (fileDest === 'database/helpers/images.csv') {
+    const reviewsHeader = 'image_url,review_id\n';
+    writer.write(reviewsHeader);
+  } else if (fileDest === 'database/helpers/subRatings.csv') {
+    const reviewsHeader = 'feature,rating,review_id\n';
+    writer.write(reviewsHeader);
+  }
 
+  // Writes the data generated into the csv file
   function write() {
     let ok = true;
     do {
@@ -51,7 +79,7 @@ function writeNTimes(fileDest, data, n) {
           ok = writer.write(data(), 'utf8');
           randomMax -= 1;
         }
-        randomMax = randomNumberGenerator(2, 10);
+        randomMax = randomNumberGenerator(1, 10);
       }
       i += 1;
     } while (i < n && ok);
@@ -60,17 +88,16 @@ function writeNTimes(fileDest, data, n) {
     }
   }
   write();
+  console.log('Done!');
+};
 
-  // writer.end();
-  // writer.on('finish', () => console.log('Success!'));
-}
-
+// Generates each row for the reviews table
 const generateReviews = () => {
-  const product_id = randomNumberGenerator(1, 10000000);
-  const product_name = faker.commerce.productName();
-  const user_id = randomNumberGenerator(1, 10000000);
+  const productId = randomNumberGenerator(1, 1e7);
+  const productName = faker.commerce.productName();
+  const userId = randomNumberGenerator(1, 1e7);
   const username = faker.name.findName();
-  const overall_ratings = randomNumberGenerator(1, 5);
+  const overallRatings = randomNumberGenerator(1, 5);
   const headline = faker.lorem.words();
   const review = faker.lorem.sentences();
   const created = `${months[randomNumberGenerator(0, 11)]} ${randomNumberGenerator(1, 28)}"," ${years[randomNumberGenerator(0, 4)]}`;
@@ -78,15 +105,31 @@ const generateReviews = () => {
   const verified = faker.random.boolean();
   const helpful = randomNumberGenerator(0, 10000);
 
-  return `'${product_id}','${product_name}','${user_id}','${username}','${overall_ratings}','${headline}','${review}','${created}','${updated}',${verified},'${helpful}'\n`;
+  return `'${productId}','${productName}','${userId}','${username}','${overallRatings}','${headline}','${review}','${created}','${updated}',${verified},'${helpful}'\n`;
 };
 
+// Generates each row for the images table
+const generateImages = () => {
+  const imageUrl = images[randomNumberGenerator(0, 10)];
+  const reviewId = randomNumberGenerator(0, 2e7);
 
-console.log('Generating Data...');
+  return `'${imageUrl}',${reviewId}\n`;
+};
 
-const reviewsFileDest = path.join(__dirname, 'reviews.csv');
-writeNTimes(reviewsFileDest, generateReviews, records);
+// Generates each row for the subRatings table
+const generateSubRatings = () => {
+  const feature = features[randomNumberGenerator(0, 8)];
+  const rating = randomNumberGenerator(1, 5);
+  const reviewId = randomNumberGenerator(0, 2e7);
 
-console.log('Writing data to csv...');
-const end = Date.now();
-console.log(`Time Elapsed: ${moment(end).diff(moment(start), 'seconds')} seconds`);
+  return `'${feature}','${rating}',${reviewId}\n`;
+};
+
+const reviewsFileDest = 'database/helpers/reviews.csv';
+writeNTimes(reviewsFileDest, generateReviews, 1e7);
+
+const imagesFileDest = 'database/helpers/images.csv';
+writeNTimes(imagesFileDest, generateImages, 1e4);
+
+const subRatingFileDest = 'database/helpers/subRatings.csv';
+writeNTimes(subRatingFileDest, generateSubRatings, 1e4);
