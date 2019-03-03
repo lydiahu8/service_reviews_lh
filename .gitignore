@@ -3,9 +3,7 @@ node_modules
 package-lock.json
 .env
 client/dist/bundle.js
-database/helpers/reviews.csv
-database/helpers/images.csv
-database/helpers/subRatings.csv
+*.csv
 database/OldDBIndex.js
 images/
 imageGenerator.js

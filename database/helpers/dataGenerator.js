@@ -50,11 +50,13 @@ const features = [
   'Easy to Assemble',
 ];
 
+const booleans = [true, false];
+
 // Writes n amount of rows into csv file
 const writeNTimes = (fileDest, data, n) => {
   let i = 0;
   const writer = fs.createWriteStream(fileDest);
-  let randomMax = randomNumberGenerator(0, 2);
+  let randomMax = randomNumberGenerator(1, 10);
 
   // Adds appropriate headings into its respective csv file
   if (fileDest === 'database/helpers/reviews.csv') {
@@ -75,29 +77,11 @@ const writeNTimes = (fileDest, data, n) => {
       if (i === n) {
         writer.write(data(), 'utf8');
       } else {
-        if (i <= 9e6) {
-          while (randomMax > 0 && ok) {
-            ok = writer.write(data(), 'utf8');
-            randomMax -= 1;
-          }
-          randomMax = randomNumberGenerator(0, 2);
+        while (randomMax > 0 && ok) {
+          ok = writer.write(data(), 'utf8');
+          randomMax -= 1;
         }
-        if (i > 9e6 && i <= 99e5) {
-          randomMax = randomNumberGenerator(10, 30);
-          while (randomMax > 0 && ok) {
-            ok = writer.write(data(), 'utf8');
-            randomMax -= 1;
-          }
-          randomMax = randomNumberGenerator(10, 30);
-        }
-        if (i > 9e5) {
-          randomMax = randomNumberGenerator(500, 1000);
-          while (randomMax > 0 && ok) {
-            ok = writer.write(data(), 'utf8');
-            randomMax -= 1;
-          }
-          randomMax = randomNumberGenerator(500, 1000);
-        }
+        randomMax = randomNumberGenerator(1, 10);
       }
       i += 1;
     } while (i < n && ok);
@@ -120,8 +104,8 @@ const generateReviews = () => {
   const review = faker.lorem.sentences();
   const created = `${months[randomNumberGenerator(0, 11)]}-${randomNumberGenerator(1, 28)}-${years[randomNumberGenerator(0, 4)]}`;
   const updated = `${months[randomNumberGenerator(0, 11)]} ${randomNumberGenerator(1, 28)}-${years[randomNumberGenerator(0, 4)]}`;
-  const verified = faker.random.boolean();
-  const helpful = randomNumberGenerator(0, 5e3);
+  const verified = booleans[randomNumberGenerator(0, 1)];
+  const helpful = randomNumberGenerator(0, 5000);
 
   return `${reviewId++},${productId},'${productName}',${userId},'${username}',${overallRatings},'${headline}','${review}','${created}','${updated}',${verified},${helpful}\n`;
 };
@@ -147,10 +131,8 @@ const generateSubRatings = () => {
 
 const reviewsFileDest = 'database/helpers/reviews.csv';
 writeNTimes(reviewsFileDest, generateReviews, 1e7);
-console.log('Successfully wrote reviews data!');
 const imagesFileDest = 'database/helpers/images.csv';
-writeNTimes(imagesFileDest, generateImages, 1e6);
-console.log('Successfully wrote images data!');
+writeNTimes(imagesFileDest, generateImages, 1e4);
+
 const subRatingFileDest = 'database/helpers/subRatings.csv';
-writeNTimes(subRatingFileDest, generateSubRatings, 1e6);
-console.log('Successfully wrote subratings data!');
+writeNTimes(subRatingFileDest, generateSubRatings, 1e4);
