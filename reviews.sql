@@ -9,7 +9,7 @@ CREATE DATABASE products;
 \timing
 
 CREATE TABLE IF NOT EXISTS reviews (
-  review_id SERIAL PRIMARY KEY,
+  review_id VARCHAR(10) PRIMARY KEY,
   product_id VARCHAR(10) NOT NULL,
   product_name VARCHAR(100) NOT NULL,
   user_id VARCHAR(10) NOT NULL,
@@ -24,30 +24,30 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 
 CREATE TABLE IF NOT EXISTS images (
-  image_id SERIAL PRIMARY KEY,
+  image_id VARCHAR(10) PRIMARY KEY,
   image_url VARCHAR(255) NOT NULL,
-  review_id INTEGER REFERENCES reviews(review_id)
+  review_id VARCHAR(10)
 );
 
 CREATE TABLE IF NOT EXISTS subratings (
-  subrating_id SERIAL PRIMARY KEY,
+  subrating_id VARCHAR(10) PRIMARY KEY,
   feature VARCHAR(50),
   rating VARCHAR(5),
-  review_id INTEGER REFERENCES reviews(review_id)
+  review_id VARCHAR(10)
 );
 
 -- COPY reviews into reviews table from CSV
-COPY reviews (product_id, product_name, user_id, username, overall_ratings, headline, review, created, updated, verified, helpful)
+COPY reviews (review_id, product_id, product_name, user_id, username, overall_ratings, headline, review, created, updated, verified, helpful)
 FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv'
 DELIMITERS ',' CSV HEADER;
 
 -- COPY images into images table from CSV
-COPY images (image_url, review_id)
+COPY images (image_id, image_url, review_id)
 FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv'
 DELIMITERS ',' CSV HEADER;
 
 -- COPY subRatings into subRatings table from CSV
-COPY subratings (feature, rating, review_id)
+COPY subratings (subrating_id, feature, rating, review_id)
 FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/subRatings.csv'
 DELIMITERS ',' CSV HEADER;
 
