@@ -20,7 +20,6 @@
     "mongoimport": "mongoimport -d products -c reviews --type csv --file /Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv --headerline && mongoimport -d products -c images --type csv --file /Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv --headerline && mongoimport -d products -c subratings --type csv --file /Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/subratings.csv --headerline",
     "check:reviews_csv": "wc -l ./database/helpers/reviews.csv",
     "check:images_csv": "wc -l ./database/helpers/images.csv",
-    "check:subratings_csv": "wc -l ./database/helpers/subratings.csv",
     "start": "nodemon ./server/index.js",
     "test": "jest",
     "test:watch": "jest --watch",

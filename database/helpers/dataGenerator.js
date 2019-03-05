@@ -2,10 +2,7 @@ const fs = require('fs');
 const faker = require('faker');
 
 const randomNumberGenerator = (min, max) => {
-  let randomNum = Math.floor(Math.random() * max);
-  if (randomNum < min) {
-    randomNum = Math.floor(Math.random() * max);
-  }
+  const randomNum = Math.floor(Math.random() * max) + min;
   return randomNum;
 };
 
@@ -55,7 +52,7 @@ const headlines = [
 const writeNTimes = (fileDest, data, n) => {
   let i = 0;
   const writer = fs.createWriteStream(fileDest);
-  let randomMax = randomNumberGenerator(1, 10);
+  let randomMax = randomNumberGenerator(1, 20);
 
   // Adds appropriate headings into its respective csv file
   if (fileDest === 'database/helpers/reviews.csv') {
@@ -77,7 +74,7 @@ const writeNTimes = (fileDest, data, n) => {
           ok = writer.write(data(), 'utf8');
           randomMax -= 1;
         }
-        randomMax = randomNumberGenerator(1, 10);
+        randomMax = randomNumberGenerator(1, 20);
       }
       i += 1;
     } while (i < n && ok);
@@ -99,8 +96,8 @@ const generateReviews = () => {
   const overallRatings = randomNumberGenerator(1, 5);
   const headline = headlines[randomNumberGenerator(0, 9)];
   const review = `${sentences[randomNumberGenerator(0, 10)]} ${sentences[randomNumberGenerator(0, 10)]} ${sentences[randomNumberGenerator(0, 10)]}`;
-  const created = `${randomNumberGenerator(1, 12)}-${randomNumberGenerator(1, 28)}-20${randomNumberGenerator(10, 19)}`;
-  const updated = `${randomNumberGenerator(1, 12)}-${randomNumberGenerator(1, 28)}-20${randomNumberGenerator(10, 19)}`;
+  const created = `${randomNumberGenerator(1, 12)}-${randomNumberGenerator(1, 28)}-20${randomNumberGenerator(11, 19)}`;
+  const updated = `${randomNumberGenerator(1, 12)}-${randomNumberGenerator(1, 28)}-20${randomNumberGenerator(11, 19)}`;
   const verified = booleans[randomNumberGenerator(0, 1)];
   const helpful = randomNumberGenerator(0, 5000);
   const materialQuality = randomNumberGenerator(0, 5);
@@ -124,4 +121,4 @@ const generateImages = () => {
 const reviewsFileDest = 'database/helpers/reviews.csv';
 writeNTimes(reviewsFileDest, generateReviews, 1e7);
 const imagesFileDest = 'database/helpers/images.csv';
-writeNTimes(imagesFileDest, generateImages, 1e5);
+writeNTimes(imagesFileDest, generateImages, 1e6);
