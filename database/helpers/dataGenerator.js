@@ -116,9 +116,9 @@ let imageId = 1;
 // Generates each row for the images table
 const generateImages = () => {
   const imageUrl = images[randomNumberGenerator(0, 10)];
-  const reviewId = randomNumberGenerator(1, 7e6);
+  const revId = randomNumberGenerator(1, 7e6);
 
-  return `${imageId++},'${imageUrl}',${reviewId}\n`;
+  return `${imageId++},'${imageUrl}',${revId}\n`;
 };
 
 const reviewsFileDest = 'database/helpers/reviews.csv';
