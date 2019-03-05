@@ -2,9 +2,40 @@ const fs = require('fs');
 const faker = require('faker');
 
 const randomNumberGenerator = (min, max) => {
-  const randomNum = Math.floor(Math.random() * max) + min;
+  let randomNum = Math.floor(Math.random() * max);
+  if (randomNum < min) {
+    randomNum = Math.floor(Math.random() * max);
+  }
   return randomNum;
 };
+
+const years = [
+  '2010',
+  '2011',
+  '2012',
+  '2013',
+  '2014',
+  '2015',
+  '2016',
+  '2017',
+  '2018',
+  '2019',
+];
+
+const months = [
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
+  '07',
+  '08',
+  '09',
+  '10',
+  '11',
+  '12',
+];
 
 const images = [
   'https://s3.amazonaws.com/saleboat/product1.jpg',
@@ -96,8 +127,8 @@ const generateReviews = () => {
   const overallRatings = randomNumberGenerator(1, 5);
   const headline = headlines[randomNumberGenerator(0, 9)];
   const review = `${sentences[randomNumberGenerator(0, 10)]} ${sentences[randomNumberGenerator(0, 10)]} ${sentences[randomNumberGenerator(0, 10)]}`;
-  const created = `${randomNumberGenerator(1, 12)}-${randomNumberGenerator(1, 28)}-20${randomNumberGenerator(11, 19)}`;
-  const updated = `${randomNumberGenerator(1, 12)}-${randomNumberGenerator(1, 28)}-20${randomNumberGenerator(11, 19)}`;
+  const created = `${months[randomNumberGenerator(0, 11)]}-${randomNumberGenerator(1, 28)}-${years[randomNumberGenerator(0, 9)]}`;
+  const updated = `${months[randomNumberGenerator(0, 11)]}-${randomNumberGenerator(1, 28)}-${years[randomNumberGenerator(0, 9)]}`;
   const verified = booleans[randomNumberGenerator(0, 1)];
   const helpful = randomNumberGenerator(0, 5000);
   const materialQuality = randomNumberGenerator(0, 5);
