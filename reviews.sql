@@ -45,5 +45,5 @@ COPY images (id, image_url, review_id)
 FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv'
 DELIMITERS ',' CSV HEADER;
 
--- CREATE INDEX productIdIndex ON reviews(product_id);
--- CREATE INDEX productNameIndex ON reviews(slug);
+CREATE INDEX productIdIndex ON reviews(product_id);
+CREATE INDEX productNameIndex ON reviews(slug);
