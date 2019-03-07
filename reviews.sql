@@ -47,3 +47,4 @@ DELIMITERS ',' CSV HEADER;
 
 CREATE INDEX productIdIndex ON reviews(product_id);
 CREATE INDEX productNameIndex ON reviews(slug);
+CREATE INDEX imageReviewIdIndex ON images(review_id);
