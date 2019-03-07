@@ -25,10 +25,11 @@ class Images extends React.Component {
     const fullUrl = document.URL;
     const urlArray = fullUrl.split('/');
     const lastSegment = urlArray[urlArray.length - 1];
-    axios.get(`http://localhost:3008/api/product/${lastSegment}`)
+    axios.get(`http://localhost:3008/api/reviews/images/${lastSegment}`)
       .then((res) => {
-        for (let i = 0; i < res.data[0].images.length; i += 1) {
-          this.state.images.push(<img src={res.data[0].images[i]} height="120" width="120" alt="test" key={i} style={{ margin: '2.5px' }} />);
+        for (let i = 0; i < res.data.rows.length; i += 1) {
+          const removeStr = res.data.rows[i].image_url.split("'");
+          this.state.images.push(<img src={removeStr[1]} height="120" width="120" alt="" key={i} style={{ margin: '2.5px' }} />);
         }
         this.setState({
           refresh: true,
@@ -41,7 +42,7 @@ class Images extends React.Component {
       isOpen: !this.state.isOpen,
     });
   }
- 
+
   render() {
     return (
       <div>
