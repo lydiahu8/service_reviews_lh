@@ -51,11 +51,12 @@ app.post('/api/reviews/', (req, res) => {
   const {
     body,
   } = req;
-  db.addOneReview(body, (err, data) => {
+  console.log(body)
+  db.addOneReview(body, (err) => {
     if (err) {
-      res.status(400).send();
+      res.status(400).send(err);
     }
-    res.status(200).send(data);
+    res.status(201).send(body);
   });
 });
 
