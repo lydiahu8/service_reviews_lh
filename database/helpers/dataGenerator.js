@@ -2,11 +2,9 @@ const fs = require('fs');
 const faker = require('faker');
 
 const randomNumberGenerator = (min, max) => {
-  let randomNum = Math.floor(Math.random() * max);
-  if (randomNum < min) {
-    randomNum = Math.floor(Math.random() * max);
-  }
-  return randomNum;
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 const years = [
@@ -143,8 +141,8 @@ const generateReviews = () => {
 let imageId = 1;
 // Generates each row for the images table
 const generateImages = () => {
-  const imageUrl = images[randomNumberGenerator(0, 10)];
-  const revId = randomNumberGenerator(1, 7e6);
+  const imageUrl = images[randomNumberGenerator(0, 9)];
+  const revId = randomNumberGenerator(1, 8e7);
 
   return `${imageId++},'${imageUrl}',${revId}\n`;
 };
