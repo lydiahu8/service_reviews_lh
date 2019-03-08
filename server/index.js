@@ -20,16 +20,29 @@ const port = 3008;
 // bundle
 app.use(express.static(`${__dirname}/../client/dist`));
 
+// Get all reviews with images for a specific product at :productId
+app.get('/api/reviews/images/:productId', (req, res) => {
+  const {
+    productId,
+  } = req.params;
+  db.getReviewImages(parseInt(productId, 10), (err, reviews) => {
+    if (err) {
+      res.status(400).send();
+    }
+    res.status(200).send(reviews);
+  });
+});
+
 // Get all reviews for a specific product at :productId
 app.get('/api/reviews/:productId', (req, res) => {
   const {
     productId,
   } = req.params;
-  db.getReviews(parseInt(productId, 10), (err, num) => {
+  db.getReviews(parseInt(productId, 10), (err, reviews) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(num);
+    res.status(200).send(reviews);
   });
 });
 
@@ -38,13 +51,28 @@ app.post('/api/reviews/', (req, res) => {
   const {
     body,
   } = req;
-  db.addOneReview(body, (err, data) => {
+  db.addOneReview(body, (err) => {
     if (err) {
-      res.status(400).send();
+      res.status(400).send(err);
     }
-    res.status(200).send(data);
+    res.status(201).send(body);
   });
 });
+
+// Post an image on a review to a product
+app.post('/api/reviews/images', (req, res) => {
+  const {
+    body,
+  } = req;
+  db.addOneImage(body, (err) => {
+    if (err) {
+      res.status(400).send(err);
+      return;
+    }
+    res.status(201).send(body);
+  });
+});
+
 
 // Update a review for a specific product at :productId
 app.put('/api/reviews/:reviewsId', (req, res) => {
@@ -54,11 +82,11 @@ app.put('/api/reviews/:reviewsId', (req, res) => {
   const {
     body,
   } = req;
-  db.updateOneReview(parseInt(reviewsId, 10), body, (err, data) => {
+  db.updateOneReview(parseInt(reviewsId, 10), body, (err) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(data);
+    res.status(200).send(body);
   });
 });
 
@@ -67,11 +95,16 @@ app.delete('/api/reviews/:reviewsId', (req, res) => {
   const {
     reviewsId,
   } = req.params;
-  db.deleteOneReview(parseInt(reviewsId, 10), (err, data) => {
+  db.deleteOneReview(parseInt(reviewsId, 10), (err) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(data);
+    db.deleteImages(parseInt(reviewsId, 10), (err) => {
+      if (err) {
+        res.status(400).send();
+      }
+      res.status(200).send(reviewsId);
+    });
   });
 });
 

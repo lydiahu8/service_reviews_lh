@@ -9,7 +9,7 @@ CREATE DATABASE products;
 \timing
 
 CREATE TABLE IF NOT EXISTS reviews (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   product_id INTEGER NOT NULL,
   product_name VARCHAR(100) NOT NULL,
   slug VARCHAR(255),
@@ -30,21 +30,21 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 
 CREATE TABLE IF NOT EXISTS images (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   image_url VARCHAR(100) NOT NULL,
-  review_id INTEGER
+  review_id BIGINT
 );
 
 -- COPY reviews into reviews table from CSV
-COPY reviews (id, product_id, product_name, slug, userid, username, overall_ratings, headline, review, created, updated, verified, helpful, material_quality, durable, easy_use, easy_assemble, water_resistance)
+COPY reviews (product_id, product_name, slug, userid, username, overall_ratings, headline, review, created, updated, verified, helpful, material_quality, durable, easy_use, easy_assemble, water_resistance)
 FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv'
 DELIMITERS ',' CSV HEADER;
 
 -- COPY images into images table from CSV
-COPY images (id, image_url, review_id)
+COPY images (image_url, review_id)
 FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv'
 DELIMITERS ',' CSV HEADER;
 
+CREATE INDEX imageReviewIdIndex ON images(review_id);
 CREATE INDEX productIdIndex ON reviews(product_id);
 CREATE INDEX productNameIndex ON reviews(slug);
-CREATE INDEX imageReviewIdIndex ON images(review_id);

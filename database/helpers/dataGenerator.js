@@ -85,10 +85,10 @@ const writeNTimes = (fileDest, data, n) => {
 
   // Adds appropriate headings into its respective csv file
   if (fileDest === 'database/helpers/reviews.csv') {
-    const reviewsHeader = 'id,product_id,product_name,slug,userid,username,overall_ratings,headline,review,created,updated,verified,helpful,material_quality,durable,easy_use,easy_assemble,water_resistance\n';
+    const reviewsHeader = 'product_id,product_name,slug,userid,username,overall_ratings,headline,review,created,updated,verified,helpful,material_quality,durable,easy_use,easy_assemble,water_resistance\n';
     writer.write(reviewsHeader);
   } else if (fileDest === 'database/helpers/images.csv') {
-    const reviewsHeader = 'id,image_url,review_id\n';
+    const reviewsHeader = 'image_url,review_id\n';
     writer.write(reviewsHeader);
   }
 
@@ -114,7 +114,6 @@ const writeNTimes = (fileDest, data, n) => {
   write();
 };
 
-let reviewId = 1;
 // Generates each row for the reviews table
 const generateReviews = () => {
   const productId = randomNumberGenerator(1, 1e7);
@@ -135,16 +134,15 @@ const generateReviews = () => {
   const easyToAssemble = randomNumberGenerator(0, 5);
   const waterResistance = randomNumberGenerator(0, 5);
 
-  return `${reviewId++},${productId},'${productName}','${slug}',${userId},'${username}',${overallRatings},'${headline}','${review}','${created}','${updated}',${verified},${helpful},${materialQuality},${durability},${easyToUse},${easyToAssemble},${waterResistance}\n`;
+  return `${productId},${productName},${slug},${userId},${username},${overallRatings},${headline},${review},${created},${updated},${verified},${helpful},${materialQuality},${durability},${easyToUse},${easyToAssemble},${waterResistance}\n`;
 };
 
-let imageId = 1;
 // Generates each row for the images table
 const generateImages = () => {
   const imageUrl = images[randomNumberGenerator(0, 9)];
   const revId = randomNumberGenerator(1, 8e7);
 
-  return `${imageId++},'${imageUrl}',${revId}\n`;
+  return `${imageUrl},${revId}\n`;
 };
 
 const reviewsFileDest = 'database/helpers/reviews.csv';

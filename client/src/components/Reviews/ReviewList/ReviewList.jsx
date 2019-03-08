@@ -29,14 +29,14 @@ class ReviewList extends React.Component {
     const fullUrl = document.URL;
     const urlArray = fullUrl.split('/');
     const lastSegment = urlArray[urlArray.length - 1];
-    axios.get(`http://localhost:3008/api/product/${lastSegment}`)
+    axios.get(`http://localhost:3008/api/reviews/${lastSegment}`)
       .then((res) => {
-        for (let i = 0; i < res.data.length; i += 1) {
-          this.state.reviewers.push(res.data[i].reviewer);
-          this.state.reviewTitle.push(res.data[i].review_title);
-          this.state.review.push(res.data[i].review);
-          this.state.helpful.push(res.data[i].helpful_counter);
-          this.state.datePosted.push(res.data[i].created_at);
+        for (let i = 0; i < res.data.rows.length; i += 1) {
+          this.state.reviewers.push(res.data.rows[i].username);
+          this.state.reviewTitle.push(res.data.rows[i].headline);
+          this.state.review.push(res.data.rows[i].review);
+          this.state.helpful.push(res.data.rows[i].helpful);
+          this.state.datePosted.push(res.data.rows[i].created);
         }
         this.setState({ done: true });
       });
