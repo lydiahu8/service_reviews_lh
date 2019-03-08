@@ -60,14 +60,11 @@ app.post('/api/reviews/', (req, res) => {
 });
 
 // Post an image on a review to a product
-app.post('/api/reviews/:reviewId/', (req, res) => {
+app.post('/api/reviews/images', (req, res) => {
   const {
     body,
   } = req;
-  const {
-    reviewId,
-  } = req.params;
-  db.addOneImage(body, reviewId, (err) => {
+  db.addOneImage(body, (err) => {
     if (err) {
       res.status(400).send(err);
       return;
@@ -102,14 +99,12 @@ app.delete('/api/reviews/:reviewsId', (req, res) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(reviewsId);
-  });
-
-  db.deleteImages(parseInt(reviewsId, 10), (err) => {
-    if (err) {
-      res.status(400).send();
-    }
-    res.status(200).send(reviewsId);
+    db.deleteImages(parseInt(reviewsId, 10), (err) => {
+      if (err) {
+        res.status(400).send();
+      }
+      res.status(200).send(reviewsId);
+    });
   });
 });
 
