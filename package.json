@@ -14,7 +14,6 @@
     "develop": "webpack --mode development --watch",
     "build": "webpack --mode production",
     "seed:psql": "node ./database/helpers/dataGenerator.js && psql -U lydiahu < reviews.sql",
-    "seed:mongo": "node ./database/helpers/dataGenerator.js && node ./database/helpers/seedMongo.js",
     "generate:data": "node ./database/helpers/dataGenerator.js",
     "psqlimport": "psql -U lydiahu < reviews.sql",
     "mongoimport": "mongoimport -d products -c reviews --type csv --file /Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv --headerline && mongoimport -d products -c images --type csv --file /Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv --headerline",
