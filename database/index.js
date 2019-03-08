@@ -54,8 +54,8 @@ const addOneReview = (review, callback) => {
 };
 
 // Add an image to a review for a product
-const addOneImage = (image, callback) => {
-  const queryStr = 'INSERT INTO images (image_url, review_id) VALUES ($1, $2)';
+const addOneImage = (image, reviewId, callback) => {
+  const queryStr = `INSERT INTO images (image_url, review_id) VALUES ($1, ${reviewId})`;
   const params = [image.image_url, image.review_id];
 
   pool.query(queryStr, params, (err) => {
@@ -94,6 +94,17 @@ const deleteOneReview = (reviewId, callback) => {
   });
 };
 
+const deleteImages = (reviewId, callback) => {
+  const queryStr = `DELETE FROM images WHERE review_id = ${reviewId};`;
+  pool.query(queryStr, (err) => {
+    if (err) {
+      callback(err);
+      return;
+    }
+    callback(null);
+  });
+};
+
 module.exports = {
   getReviewImages,
   getReviews,
@@ -101,4 +112,5 @@ module.exports = {
   addOneImage,
   updateOneReview,
   deleteOneReview,
+  deleteImages,
 };

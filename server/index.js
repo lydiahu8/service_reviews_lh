@@ -51,7 +51,6 @@ app.post('/api/reviews/', (req, res) => {
   const {
     body,
   } = req;
-  console.log(body);
   db.addOneReview(body, (err) => {
     if (err) {
       res.status(400).send(err);
@@ -59,6 +58,24 @@ app.post('/api/reviews/', (req, res) => {
     res.status(201).send(body);
   });
 });
+
+// Post an image on a review to a product
+app.post('/api/reviews/:reviewId/', (req, res) => {
+  const {
+    body,
+  } = req;
+  const {
+    reviewId,
+  } = req.params;
+  db.addOneImage(body, reviewId, (err) => {
+    if (err) {
+      res.status(400).send(err);
+      return;
+    }
+    res.status(201).send(body);
+  });
+});
+
 
 // Update a review for a specific product at :productId
 app.put('/api/reviews/:reviewsId', (req, res) => {
@@ -82,6 +99,13 @@ app.delete('/api/reviews/:reviewsId', (req, res) => {
     reviewsId,
   } = req.params;
   db.deleteOneReview(parseInt(reviewsId, 10), (err) => {
+    if (err) {
+      res.status(400).send();
+    }
+    res.status(200).send(reviewsId);
+  });
+
+  db.deleteImages(parseInt(reviewsId, 10), (err) => {
     if (err) {
       res.status(400).send();
     }
