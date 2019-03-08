@@ -51,7 +51,7 @@ app.post('/api/reviews/', (req, res) => {
   const {
     body,
   } = req;
-  console.log(body)
+  console.log(body);
   db.addOneReview(body, (err) => {
     if (err) {
       res.status(400).send(err);
@@ -68,11 +68,11 @@ app.put('/api/reviews/:reviewsId', (req, res) => {
   const {
     body,
   } = req;
-  db.updateOneReview(parseInt(reviewsId, 10), body, (err, data) => {
+  db.updateOneReview(parseInt(reviewsId, 10), body, (err) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(data);
+    res.status(200).send(body);
   });
 });
 
@@ -81,11 +81,11 @@ app.delete('/api/reviews/:reviewsId', (req, res) => {
   const {
     reviewsId,
   } = req.params;
-  db.deleteOneReview(parseInt(reviewsId, 10), (err, data) => {
+  db.deleteOneReview(parseInt(reviewsId, 10), (err) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(data);
+    res.status(200).send(reviewsId);
   });
 });
 
