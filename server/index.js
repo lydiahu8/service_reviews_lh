@@ -1,4 +1,5 @@
 /* eslint-disable prefer-destructuring */
+const newrelic = require('newrelic');
 const express = require('express');
 const compression = require('compression');
 const cors = require('cors');
@@ -6,16 +7,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('../database/index.js');
 
+
 const app = express();
 
-app.use(compression());
+// app.use(compression());
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+//   extended: true,
+// }));
 
 const port = 3008;
+
+const jsonParser = bodyParser.json();
 
 // bundle
 app.use(express.static(`${__dirname}/../client/dist`));
@@ -47,7 +51,7 @@ app.get('/api/reviews/:productId', (req, res) => {
 });
 
 // Post a review to a specific product
-app.post('/api/reviews/', (req, res) => {
+app.post('/api/reviews/', jsonParser, (req, res) => {
   const {
     body,
   } = req;
@@ -60,7 +64,7 @@ app.post('/api/reviews/', (req, res) => {
 });
 
 // Post an image on a review to a product
-app.post('/api/reviews/images', (req, res) => {
+app.post('/api/reviews/images', jsonParser, (req, res) => {
   const {
     body,
   } = req;
@@ -75,7 +79,7 @@ app.post('/api/reviews/images', (req, res) => {
 
 
 // Update a review for a specific product at :productId
-app.put('/api/reviews/:reviewsId', (req, res) => {
+app.put('/api/reviews/:reviewsId', jsonParser, (req, res) => {
   const {
     reviewsId,
   } = req.params;

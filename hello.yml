@@ -1,0 +1,46 @@
+config:
+  target: 'http://localhost:3008'
+  processor: "./artillery.js"
+  http:
+    pool: 10 # All HTTP requests from all virtual users will be sent over the same 10 connections
+  phases:
+    - duration: 60
+      arrivalRate: 1000
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567'
+scenarios:
+  - flow:
+    - function: "randomNumber"
+    - get:
+        url: "/{{ randomNum }}"
+    - get:
+        url: "/api/reviews/{{ randomNum }}"
+    - get:
+        url: "/api/reviews/images/{{ randomNum }}"
+  - flow:
+    - post:
+        url: "/api/reviews/"
+        json:
+          product_id : 4789341
+          product_name : "dog food"
+          slug : "dog%food"
+          user_id : 756769
+          username : "Johnson Jones"
+          overall_ratings : 5
+          headline : "Dog Food was not good"
+          review : "I dont like it!"
+          created : "03-3-2019"
+          updated : "03-3-2019"
+          verified : "true"
+          helpful : 293
+          material_quality : 1
+          durable : 0
+          easy_use : 0
+          easy_assemble : 0
+          water_resistance : 3
+    - post:
+        url: "/api/reviews/images/"
+        json:
+          image_url : "https://s3.amazonaws.com/saleboat/product1.jpg"
+          review_id : 93484015
