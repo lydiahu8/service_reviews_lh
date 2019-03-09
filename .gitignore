@@ -8,6 +8,9 @@ database/OldDBIndex.js
 images/
 imageGenerator.js
 sampleQuery.md
+artilleryLH.md
+newrelic_agent.log
+newrelic.config.js
 
 
 
