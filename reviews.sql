@@ -36,14 +36,10 @@ CREATE TABLE IF NOT EXISTS images (
 );
 
 -- COPY reviews into reviews table from CSV
-COPY reviews (product_id, product_name, slug, userid, username, overall_ratings, headline, review, created, updated, verified, helpful, material_quality, durable, easy_use, easy_assemble, water_resistance)
-FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv'
-DELIMITERS ',' CSV HEADER;
+\COPY reviews (product_id, product_name, slug, userid, username, overall_ratings, headline, review, created, updated, verified, helpful, material_quality, durable, easy_use, easy_assemble, water_resistance) FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv' DELIMITERS ',' CSV HEADER;
 
 -- COPY images into images table from CSV
-COPY images (image_url, review_id)
-FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv'
-DELIMITERS ',' CSV HEADER;
+\COPY images (image_url, review_id) FROM '/Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv' DELIMITERS ',' CSV HEADER;
 
 CREATE INDEX imageReviewIdIndex ON images(review_id);
 CREATE INDEX productIdIndex ON reviews(product_id);
