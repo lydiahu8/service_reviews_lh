@@ -16,11 +16,7 @@ class ReviewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviewers: [],
-      reviewTitle: [],
-      review: [],
-      helpful: [],
-      datePosted: [],
+      reviewInfo: [],
       done: false,
     };
   }
@@ -31,21 +27,18 @@ class ReviewList extends React.Component {
     const lastSegment = urlArray[urlArray.length - 1];
     axios.get(`http://localhost:3008/api/reviews/${lastSegment}`)
       .then((res) => {
-        for (let i = 0; i < res.data.rows.length; i += 1) {
-          this.state.reviewers.push(res.data.rows[i].username);
-          this.state.reviewTitle.push(res.data.rows[i].headline);
-          this.state.review.push(res.data.rows[i].review);
-          this.state.helpful.push(res.data.rows[i].helpful);
-          this.state.datePosted.push(res.data.rows[i].created);
-        }
-        this.setState({ done: true });
+        this.setState({
+          reviewInfo: res.data.rows,
+          done: true,
+        });
       });
   }
 
   render() {
     const {
-      reviewers, reviewTitle, review, helpful, datePosted,
+      reviewInfo,
     } = this.state;
+    console.log('reviewInfo', reviewInfo);
     return (
       <div>
         <Title>Showing 1-3 of 453 reviews</Title>
@@ -55,87 +48,55 @@ class ReviewList extends React.Component {
             <option value="Most recent">Most recent</option>
           </Select>
         </div>
-
-        <Reviews>
-          <div>
-            <Starbox>
-              <img
-                src="https://s3.amazonaws.com/product-reviews-hr110/Icons/avatar.png"
-                height="30px"
-                width="30px"
-                alt="avatar"
-                max-width="100%"
-                display="block"
-              />
-              {reviewers[0]}
-            </Starbox>
-            <Starbox>
-              <img src="https://s3.amazonaws.com/product-reviews-hr110/Icons/stars.png" alt="stars" height="25px" />
-              <Title> {reviewTitle[0]} </Title>
-            </Starbox>
-            <div> {datePosted[0]} </div>
-            <p width="auto">
-              {review[0]}
-            </p>
-            <div>
-              {helpful[0]} people found this helpful
-            </div>
-            <Space>
-              <Button>Helpful</Button> |
-              <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Comment</a> |
-              <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Report abuse</a>
-            </Space>
-          </div>
-        </Reviews>
-
-        <Reviews>
-          <Starbox>
-            <img src="https://s3.amazonaws.com/product-reviews-hr110/Icons/avatar.png" height="30px" width="30px" alt="avatar" />
-            {reviewers[1]}
-          </Starbox>
-          <Starbox>
-            <img src="https://s3.amazonaws.com/product-reviews-hr110/Icons/stars.png" alt="stars" height="25px" />
-            <Title> {reviewTitle[1]} </Title>
-          </Starbox>
-          <div> {datePosted[1]} </div>
-          <p width="auto">
-            {review[1]}
-          </p>
-          <div>
-            {helpful[1]} people found this helpful
-          </div>
-          <Space>
-            <Button>Helpful</Button> |
-            <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Comment</a> |
-            <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Report abuse</a>
-          </Space>
-        </Reviews>
-
-        <Reviews>
-          <Starbox>
-            <img src="https://s3.amazonaws.com/product-reviews-hr110/Icons/avatar.png" height="30px" width="30px" alt="avatar" />
-            {reviewers[2]}
-          </Starbox>
-          <Starbox>
-            <img src="https://s3.amazonaws.com/product-reviews-hr110/Icons/stars.png" alt="stars" height="25px" />
-            <Title> {reviewTitle[2]} </Title>
-          </Starbox>
-          <div> {datePosted[2]} </div>
-          <p width="auto">
-            {review[2]}
-          </p>
-          <div>
-            {helpful[2]} people found this helpful
-          </div>
-          <Space>
-            <Button>Helpful</Button> |
-            <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Comment</a> |
-            <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Report abuse</a>
-          </Space>
-        </Reviews>
+        <div>
+          {
+            reviewInfo.map(review => (
+              <Review review={review} key={review.id} />
+            ))
+          }
+        </div>
       </div>
     );
   }
 }
 
 export default ReviewList;
+
+const Review = (props) => {
+  const {
+    username, headline, review, helpful, created,
+  } = props.review;
+  return (
+    <Reviews>
+      <div>
+        <Starbox>
+          <img
+            src="https://s3.amazonaws.com/product-reviews-hr110/Icons/avatar.png"
+            height="30px"
+            width="30px"
+            alt="avatar"
+            max-width="100%"
+            display="block"
+          />
+          {username}
+        </Starbox>
+        <Starbox>
+          <img src="https://s3.amazonaws.com/product-reviews-hr110/Icons/stars.png" alt="stars" height="25px" />
+          <Title>{headline}</Title>
+        </Starbox>
+        <div> {created} </div>
+        <p width="auto">
+          {review}
+        </p>
+        <div>
+          {helpful} people found this helpful
+        </div>
+        <Space>
+          <Button>Helpful</Button> |
+          <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Comment</a> |
+          <a href="#top" style={{ textDecoration: 'none', color: '#7a7a7a' }}>Report abuse</a>
+        </Space>
+      </div>
+    </Reviews>
+  );
+};

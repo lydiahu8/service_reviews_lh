@@ -28,8 +28,7 @@ class Images extends React.Component {
     axios.get(`http://localhost:3008/api/reviews/images/${lastSegment}`)
       .then((res) => {
         for (let i = 0; i < res.data.rows.length; i += 1) {
-          const removeStr = res.data.rows[i].image_url.split("'");
-          this.state.images.push(<img src={removeStr[1]} height="120" width="120" alt="" key={i} style={{ margin: '2.5px' }} />);
+          this.state.images.push(<img src={res.data.rows[i].image_url} height="120" width="120" alt="" key={i} style={{ margin: '2.5px' }} />);
         }
         this.setState({
           refresh: true,

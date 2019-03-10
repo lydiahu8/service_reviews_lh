@@ -19,6 +19,7 @@
     "mongoimport": "mongoimport -d products -c reviews --type csv --file /Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/reviews.csv --headerline && mongoimport -d products -c images --type csv --file /Users/lydiahu/Documents/HackReactor/Immersive/SDC/service_reviews_lh/database/helpers/images.csv --headerline",
     "check:reviews_csv": "wc -l ./database/helpers/reviews.csv",
     "check:images_csv": "wc -l ./database/helpers/images.csv",
+    "seed_ec2": "psql -U lydiahu -d products -h ec2-3-94-96-208.compute-1.amazonaws.com < reviews.sql",
     "start": "nodemon ./server/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
