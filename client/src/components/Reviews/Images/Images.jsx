@@ -24,7 +24,7 @@ class Images extends React.Component {
   componentDidMount() {
     const fullUrl = document.URL;
     const urlArray = fullUrl.split('/');
-    const lastSegment = urlArray[urlArray.length - 1];
+    const lastSegment = urlArray[urlArray.length - 1] || 1;
     axios.get(`http://localhost:3008/api/reviews/images/${lastSegment}`)
       .then((res) => {
         for (let i = 0; i < res.data.rows.length; i += 1) {

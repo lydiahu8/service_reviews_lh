@@ -24,7 +24,7 @@ class ReviewList extends React.Component {
   componentDidMount() {
     const fullUrl = document.URL;
     const urlArray = fullUrl.split('/');
-    const lastSegment = urlArray[urlArray.length - 1];
+    const lastSegment = urlArray[urlArray.length - 1] || 1;
     axios.get(`http://localhost:3008/api/reviews/${lastSegment}`)
       .then((res) => {
         this.setState({
@@ -38,7 +38,7 @@ class ReviewList extends React.Component {
     const {
       reviewInfo,
     } = this.state;
-    console.log('reviewInfo', reviewInfo);
+
     return (
       <div>
         <Title>Showing 1-3 of 453 reviews</Title>
