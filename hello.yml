@@ -4,8 +4,8 @@ config:
   http:
     pool: 10 # All HTTP requests from all virtual users will be sent over the same 10 connections
   phases:
-    - duration: 60
-      arrivalRate: 1000
+    - duration: 60 #load phase for 60 seconds
+      arrivalRate: 1000 # 1000 new virtual users arriving at every second average
   defaults:
     headers:
       x-my-service-auth: '987401838271002188298567'

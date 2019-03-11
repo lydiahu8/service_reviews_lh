@@ -25,7 +25,7 @@ class ReviewList extends React.Component {
     const fullUrl = document.URL;
     const urlArray = fullUrl.split('/');
     const lastSegment = urlArray[urlArray.length - 1] || 1;
-    axios.get(`http://localhost:3008/api/reviews/${lastSegment}`)
+    axios.get(`/api/reviews/${lastSegment}`)
       .then((res) => {
         this.setState({
           reviewInfo: res.data.rows,
