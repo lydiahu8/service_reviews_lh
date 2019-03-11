@@ -21,6 +21,7 @@
     "check:images_csv": "wc -l ./database/helpers/images.csv",
     "seed_ec2": "psql -U lydiahu -d products -h ec2-3-94-96-208.compute-1.amazonaws.com < reviews.sql",
     "start": "nodemon ./server/index.js",
+    "server": "node ./server/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
