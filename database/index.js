@@ -2,11 +2,9 @@ const {
   Pool,
 } = require('pg');
 
-const pool = new Pool({
-  host: 'localhost',
-  database: 'products',
-  port: 5432,
-});
+const config = require('./config.js');
+
+const pool = new Pool(config);
 
 // Get all reviews with images for a product
 const getReviewImages = (productId, callback) => {
