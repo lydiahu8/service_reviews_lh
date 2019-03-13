@@ -10,7 +10,7 @@ const db = require('../database/index.js');
 
 const app = express();
 
-// app.use(compression());
+app.use(compression());
 app.use(cors());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({
