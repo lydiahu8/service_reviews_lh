@@ -28,7 +28,7 @@ class ReviewList extends React.Component {
     axios.get(`/api/reviews/${lastSegment}`)
       .then((res) => {
         this.setState({
-          reviewInfo: res.data.rows,
+          reviewInfo: res.data,
           done: true,
         });
       });

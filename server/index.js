@@ -33,7 +33,7 @@ app.get('/api/reviews/images/:productId', (req, res) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(reviews);
+    res.status(200).send(reviews.rows);
   });
 });
 
@@ -46,7 +46,7 @@ app.get('/api/reviews/:productId', (req, res) => {
     if (err) {
       res.status(400).send();
     }
-    res.status(200).send(reviews);
+    res.status(200).send(reviews.rows);
   });
 });
 
