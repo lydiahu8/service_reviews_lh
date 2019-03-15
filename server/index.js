@@ -1,5 +1,5 @@
 /* eslint-disable prefer-destructuring */
-const newrelic = require('newrelic');
+// const newrelic = require('newrelic');
 const express = require('express');
 const compression = require('compression');
 const cors = require('cors');
