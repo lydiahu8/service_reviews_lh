@@ -8,7 +8,7 @@ const pool = new Pool(config);
 
 // Get all reviews with images for a product
 const getReviewImages = (productId, callback) => {
-  const queryStr = `SELECT * FROM reviews INNER JOIN images ON reviews.id = images.review_id WHERE reviews.product_id = ${productId};`;
+  const queryStr = `SELECT reviews.id, images.review_id, reviews.product_id, reviews.slug, images.image_url FROM reviews INNER JOIN images ON reviews.id = images.review_id WHERE reviews.product_id = ${productId};`;
   pool.query(queryStr, (err, review) => {
     if (err) {
       callback(err);
